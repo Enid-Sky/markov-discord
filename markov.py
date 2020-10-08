@@ -2,6 +2,9 @@
 
 import sys
 from random import choice
+import os
+import discord
+import secrets
 
 
 def open_and_read_file(filenames):
@@ -52,7 +55,7 @@ def make_text(chains):
         words.append(word)
         key = (key[1], word)
 
-    return ' '.join(words)
+    return' '.join(words)
 
 
 # Get the filenames from the user through a command line prompt, ex:
@@ -64,3 +67,25 @@ text = open_and_read_file(filenames)
 
 # Get a Markov chain
 chains = make_chains(text)
+
+
+client = discord.Client()
+
+
+@client.event
+async def on_ready():
+    print(f'Successfully connected! Logged in as {client.user}.')
+
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    # TODO: replace this with your code
+
+    if message.content.startswith('bonjour'):
+        await message.channel.send('Hello!')
+
+os.environ.get('DISCORD_TOKEN')
+client.run(os.environ['DISCORD_TOKEN'])
